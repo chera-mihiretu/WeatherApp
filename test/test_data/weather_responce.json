@@ -1,0 +1,44 @@
+{
+  "coord": {
+    "lon": 39.2705,
+    "lat": 8.541
+  },
+  "weather": [
+    {
+      "id": 804,
+      "main": "Clouds",
+      "description": "overcast clouds",
+      "icon": "04d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 24.58,
+    "feels_like": 24.45,
+    "temp_min": 24.58,
+    "temp_max": 24.58,
+    "pressure": 1014,
+    "humidity": 52,
+    "sea_level": 1014,
+    "grnd_level": 845
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 6.39,
+    "deg": 234,
+    "gust": 7.66
+  },
+  "clouds": {
+    "all": 100
+  },
+  "dt": 1724835676,
+  "sys": {
+    "country": "ET",
+    "sunrise": 1724814905,
+    "sunset": 1724859213
+  },
+  "timezone": 10800,
+  "id": 330186,
+  "name": "Nazrēt",
+  "cod": 200
+}
