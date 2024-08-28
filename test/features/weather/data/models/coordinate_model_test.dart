@@ -21,5 +21,10 @@ void main() {
       /// assert
       expect(TestData.coordinateModel.toEntity(), TestData.coordinateEntity);
     });
+
+    test("should return valid model from entity", () {
+      final result = CoordinateModel.fromEntity(TestData.coordinateEntity);
+      expect(result, TestData.coordinateModel);
+    });
   });
 }

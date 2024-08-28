@@ -32,4 +32,11 @@ class CoordinateModel extends CoordinateEntity {
   CoordinateEntity toEntity() {
     return CoordinateEntity(lon: lon, lat: lat);
   }
+
+  factory CoordinateModel.fromEntity(CoordinateEntity coord) {
+    return CoordinateModel(
+      lon: coord.lon,
+      lat: coord.lat,
+    );
+  }
 }
