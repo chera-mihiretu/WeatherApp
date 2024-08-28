@@ -145,9 +145,14 @@ class TestData {
   static Map<String, dynamic> getAll() {
     return json.decode(readJson());
   }
+
+  //! city name
+  static String cityName = 'New York';
+  // error message
+  static String error = 'Error occured';
 }
 
 void main() {
-  final result = TestData.getAtmosphere();
-  print(result);
+  // final result = TestData.getAtmosphere();
+  // print(result);
 }
