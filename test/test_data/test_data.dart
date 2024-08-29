@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+// ignore: depend_on_referenced_packages
+import 'package:path/path.dart' as path;
 import 'package:weather/features/weather/data/models/atmosphere_model.dart';
 import 'package:weather/features/weather/data/models/coordinate_model.dart';
 import 'package:weather/features/weather/data/models/full_weather_model.dart';
@@ -99,11 +101,11 @@ class TestData {
     name: 'Nazrēt',
   );
   static FullWeatherEntity fullWeatherEntity = FullWeatherEntity(
-    coordinateEntity: coordinateModel,
-    weatherEntity: [weatherModel],
+    coordinateEntity: coordinateEntity,
+    weatherEntity: [weatherEntity],
     visiblity: 10000,
-    windEntity: windModel,
-    sysEntity: sysModel,
+    windEntity: windEntity,
+    sysEntity: sysEntity,
     name: 'Nazrēt',
   );
   //!======================================================//
@@ -113,8 +115,22 @@ class TestData {
   static String readJson() {
     String dir = Directory.current.path;
 
+    if (dir.contains('/test')) {
+      dir = popUntilWeather(dir);
+    }
+
     dir = '$dir/test/test_data/weather_responce.json';
-    return File(dir).readAsStringSync();
+    return File(dir).readAsStringSync(encoding: utf8);
+  }
+
+  static String popUntilWeather(String filePath) {
+    List<String> segments = path.split(filePath);
+
+    while (segments.isNotEmpty && segments.last != 'weather') {
+      segments.removeLast();
+    }
+
+    return segments.isEmpty ? '' : path.joinAll(segments);
   }
 
   static List<dynamic> getWeather() {
@@ -150,9 +166,16 @@ class TestData {
   static String cityName = 'New York';
   // error message
   static String error = 'Error occured';
+  //! Testing apis and url
+  static const String apiKey = 'abcdedfghjk';
+  static const String baseUrl = 'http://my_weather.com/';
+  //! Response header to prevent erro
+  static Map<String, String> header = {
+    HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+  };
 }
 
 void main() {
-  // final result = TestData.getAtmosphere();
-  // print(result);
+  final result = TestData.readJson();
+  print(result);
 }
