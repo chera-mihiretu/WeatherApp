@@ -47,11 +47,11 @@ class FullWeatherModel extends FullWeatherEntity {
 
   FullWeatherEntity toEntity() {
     return FullWeatherEntity(
-        coordinateEntity: coordinateEntity,
-        weatherEntity: weatherEntity,
+        coordinateEntity: coordinateModel.toEntity(),
+        weatherEntity: weatherModels.map((model) => model.toEntity()).toList(),
         visiblity: visiblity,
-        windEntity: windEntity,
-        sysEntity: sysEntity,
+        windEntity: windModel.toEntity(),
+        sysEntity: sysModel.toEntity(),
         name: name);
   }
 }
