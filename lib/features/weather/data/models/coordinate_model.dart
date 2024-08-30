@@ -1,3 +1,4 @@
+import 'package:weather/features/location/data/model/location_model.dart';
 import 'package:weather/features/weather/domain/entities/coordinate_entity.dart';
 
 class CoordinateModel extends CoordinateEntity {
@@ -38,5 +39,9 @@ class CoordinateModel extends CoordinateEntity {
       lon: coord.lon,
       lat: coord.lat,
     );
+  }
+
+  factory CoordinateModel.fromLocation(LocationModel location) {
+    return CoordinateModel(lon: location.lon, lat: location.lat);
   }
 }
