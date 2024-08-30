@@ -7,4 +7,7 @@ class ExceptionErrors {
   static const String unkownError =
       'Something went wrong. Please try again later.';
   static const String dataNotFound = 'Local data not found';
+  static const String locationPermissionNotGranted =
+      'Location permission is not granted';
+  static const String locationIsNotEnabled = 'Location is not enabled';
 }

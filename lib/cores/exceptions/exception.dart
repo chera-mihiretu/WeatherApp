@@ -21,3 +21,9 @@ class CacheException implements Exception {
 
   CacheException({required this.message});
 }
+
+class LocationException implements Exception {
+  final String message;
+
+  LocationException({required this.message});
+}
