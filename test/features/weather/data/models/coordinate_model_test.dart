@@ -26,5 +26,10 @@ void main() {
       final result = CoordinateModel.fromEntity(TestData.coordinateEntity);
       expect(result, TestData.coordinateModel);
     });
+
+    test('Should return valid coord from Location', () {
+      expect(CoordinateModel.fromLocation(TestData.locationModel),
+          TestData.coordinateModel);
+    });
   });
 }

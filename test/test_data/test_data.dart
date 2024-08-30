@@ -3,6 +3,8 @@ import 'dart:io';
 
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;
+import 'package:weather/features/location/data/model/location_model.dart';
+import 'package:weather/features/location/domain/entities/location_entity.dart';
 import 'package:weather/features/weather/data/models/atmosphere_model.dart';
 import 'package:weather/features/weather/data/models/coordinate_model.dart';
 import 'package:weather/features/weather/data/models/full_weather_model.dart';
@@ -17,6 +19,12 @@ import 'package:weather/features/weather/domain/entities/weather_entity.dart';
 import 'package:weather/features/weather/domain/entities/wind_entity.dart';
 
 class TestData {
+  //! Location model
+  static LocationModel locationModel =
+      const LocationModel(lon: 39.2705, lat: 8.541, alt: 10);
+  static LocationEntity locationEntity =
+      const LocationEntity(lon: 39.2705, lat: 8.541, alt: 10);
+
   //! Weather model
   static WeatherEntity weatherEntity = WeatherEntity(
     id: 804,
