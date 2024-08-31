@@ -135,14 +135,14 @@ class MyTheme {
           color: Colors.white),
       bodyLarge: TextStyle(
           fontFamily: 'Poppins',
-          fontSize: 16,
-          fontWeight: FontWeight.normal,
-          color: Colors.white),
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: Colors.black),
       bodyMedium: TextStyle(
           fontFamily: 'Poppins',
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-          color: Colors.white),
+          fontSize: 12,
+          fontWeight: FontWeight.w300,
+          color: Colors.black),
       bodySmall: TextStyle(
           fontFamily: 'Poppins',
           fontSize: 12,
@@ -166,8 +166,6 @@ class MyTheme {
     ),
   );
 
-  static TextStyle costumHeader = TextStyle(
-    fontSize: 120,
-    fontWeight: FontWeight.bold,
-  );
+  static TextStyle costumHeader = const TextStyle(
+      fontSize: 80, fontWeight: FontWeight.w300, color: Colors.white);
 }
