@@ -5,7 +5,8 @@ import 'package:weather/features/location/presentation/page/splash_screen.dart';
 import 'package:weather/features/weather/presentation/pages/weather_screen.dart';
 
 void main() {
-  runApp(DevicePreview(builder: (context) => const MyApp()));
+  // runApp(DevicePreview(builder: (context) => const MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -18,10 +19,10 @@ class MyApp extends StatelessWidget {
       darkTheme: MyTheme.darkTheme,
       themeMode: ThemeMode.system,
       routes: {
-        SplashScreen.route: (context) => const SplashScreen(),
+        SplashScreen.routes: (context) => const SplashScreen(),
         WeatherScreen.routes: (context) => const WeatherScreen()
       },
-      initialRoute: WeatherScreen.routes,
+      initialRoute: SplashScreen.routes,
     );
   }
 }
