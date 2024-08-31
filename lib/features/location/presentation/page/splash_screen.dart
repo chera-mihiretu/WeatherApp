@@ -1,12 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:lottie/lottie.dart';
 import 'package:weather/cores/constants/constants.dart';
 import 'package:weather/cores/theme/theme.dart';
+import 'package:weather/features/weather/presentation/pages/weather_screen.dart';
 
-class SplashScreen extends StatelessWidget {
-  static String route = '/splash_screen';
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+  static String routes = '/splash_screen';
+
+  @override
+  State<StatefulWidget> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const WeatherScreen()));
+    });
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

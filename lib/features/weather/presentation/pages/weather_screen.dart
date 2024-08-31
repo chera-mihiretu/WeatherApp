@@ -1,7 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:weather/cores/theme/theme.dart';
+import 'package:weather/features/weather/presentation/widgets/export_files.dart';
+import 'package:weather/features/weather/presentation/widgets/icon_display.dart';
 
 class WeatherScreen extends StatelessWidget {
   static const String routes = '/weather_screen';
@@ -13,42 +16,88 @@ class WeatherScreen extends StatelessWidget {
         body: Stack(
       children: [
         Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/mostly_cloud.jpg'),
-              fit: BoxFit.fill,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                MyTheme.backgroundLight,
+                MyTheme.backgroundDark,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
           ),
         ),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-          child: Container(
-            color: Colors.black.withOpacity(
-                .3), // Semi-transparent background to show blur effect
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  width: MediaQuery.of(context).size.width / 6,
-                  height: MediaQuery.of(context).size.height / 6,
-                  'assets/icons/partially_cloud.png',
-                ),
-                Row(
+        Container(
+          color: Colors.black.withOpacity(
+              .3), // Semi-transparent background to show blur effect
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SafeArea(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      '50',
-                      style: MyTheme.costumHeader,
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
                     ),
-                    Text(
-                      'o',
-                      style: Theme.of(context).textTheme.titleLarge,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          'Nekemt',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.search),
+                      color: Colors.white,
                     )
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+              const IconDisplay(icon: 'assets/icons/partially_cloud.png'),
+              const WeatherData(
+                temp: 23.5,
+                type: 'Sunny',
+              ),
+              const Expanded(child: SizedBox())
+            ],
           ),
+        ),
+        DraggableScrollableSheet(
+          initialChildSize: 0.2, // Initial size of the sheet
+          minChildSize: 0.2, // Minimum size of the sheet
+          maxChildSize: .55, // Maximum size of the sheet
+          builder: (context, scroll) {
+            return ClipRRect(
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+              child: Container(
+                color: const Color.fromARGB(255, 255, 255, 255),
+                child: GridView.builder(
+                  itemCount: 9,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                  controller: scroll,
+                  itemBuilder: (context, index) {
+                    return const SingleDataCard(
+                      name: 'Hummidity',
+                      icon: Icon(Icons.cloud_outlined),
+                      data: 'Name',
+                    );
+                  },
+                ),
+              ),
+            );
+          },
         ),
       ],
     ));
