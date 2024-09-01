@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:weather/cores/theme/theme.dart';
 import 'package:weather/features/weather/presentation/widgets/export_files.dart';
 import 'package:weather/features/weather/presentation/widgets/icon_display.dart';
@@ -56,7 +53,7 @@ class WeatherScreen extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.search),
+                      icon: const Icon(Icons.search),
                       color: Colors.white,
                     )
                   ],

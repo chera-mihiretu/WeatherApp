@@ -27,7 +27,7 @@ final locator = GetIt.instance;
 Future<void> init() async {
   //! loading necessary data
   await Hive.initFlutter();
-
+  await dotenv.load();
   //! enviroment
   locator.registerLazySingleton(() => EnvDataLoader());
   //! client

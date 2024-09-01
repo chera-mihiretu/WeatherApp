@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather/cores/constants/constants.dart';
 import 'package:weather/cores/theme/theme.dart';
 import 'package:weather/features/location/presentation/bloc/location_bloc.dart';
+import 'package:weather/features/location/presentation/widgets/dialog_for_request.dart';
 import 'package:weather/features/weather/presentation/bloc/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/pages/weather_screen.dart';
 
@@ -42,8 +43,16 @@ class _SplashScreenState extends State<SplashScreen> {
                   lat: state.locationEntity.lat));
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (_) => const WeatherScreen()));
-        } else {
-          SystemNavigator.pop();
+        } else if (state is LocationErrorState) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return DialogForRequest(press: () {
+                  BlocProvider.of<LocationBloc>(context)
+                      .add(GetLocationEvent());
+                  Navigator.pop(context);
+                });
+              });
         }
       },
       child: Scaffold(
