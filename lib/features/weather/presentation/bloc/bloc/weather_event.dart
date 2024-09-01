@@ -19,8 +19,8 @@ final class GetWeatherByCiyNameEvent extends WeatherEvent {
 }
 
 final class GetWeatherByAbsLocationEvent extends WeatherEvent {
-  final CoordinateEntity coordinateEntity;
-
-  GetWeatherByAbsLocationEvent({required this.coordinateEntity})
-      : super(changeTracker: [coordinateEntity]);
+  final double lon;
+  final double lat;
+  GetWeatherByAbsLocationEvent({required this.lon, required this.lat})
+      : super(changeTracker: [lon, lat]);
 }

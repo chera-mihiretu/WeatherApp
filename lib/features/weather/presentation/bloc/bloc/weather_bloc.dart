@@ -29,8 +29,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     });
     on<GetWeatherByAbsLocationEvent>((event, emit) async {
       emit(WeatherLoadingState());
-      final result =
-          await getWeatherByAbsLocationUsecase.execute(event.coordinateEntity);
+      final coor = CoordinateEntity(lon: event.lon, lat: event.lat);
+      final result = await getWeatherByAbsLocationUsecase.execute(coor);
       result.fold((failure) {
         emit(WeatherErrorState(message: failure.message));
       }, (data) {

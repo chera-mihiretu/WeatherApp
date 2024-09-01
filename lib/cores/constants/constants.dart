@@ -12,5 +12,9 @@ class AppData {
   static const String weatherStorage = 'WEATHER';
   static const String coordinateStorage = 'COORDINATE';
 
+  static const String timeStorageBox = 'TIMEBOX';
+  static const String weatherStorageBox = 'WEATHERBOX';
+  static const String coordinateStorageBox = 'COORDINATEBOX';
+
   static const String appName = 'Weather';
 }
