@@ -109,7 +109,7 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
 
       return answer;
     } on CacheException {
-      return false;
+      return true;
     }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/cores/theme/theme.dart';
+import 'package:weather/features/weather/presentation/bloc/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/widgets/export_files.dart';
 import 'package:weather/features/weather/presentation/widgets/icon_display.dart';
 
@@ -76,22 +78,27 @@ class WeatherScreen extends StatelessWidget {
             return ClipRRect(
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              child: Container(
-                color: const Color.fromARGB(255, 255, 255, 255),
-                child: GridView.builder(
-                  itemCount: 9,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                  ),
-                  controller: scroll,
-                  itemBuilder: (context, index) {
-                    return const SingleDataCard(
-                      name: 'Hummidity',
-                      icon: Icon(Icons.cloud_outlined),
-                      data: 'Name',
-                    );
-                  },
-                ),
+              child: BlocBuilder<WeatherBloc, WeatherState>(
+                builder: (context, state) {
+                  return Container(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    child: GridView.builder(
+                      itemCount: 9,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                      ),
+                      controller: scroll,
+                      itemBuilder: (context, index) {
+                        return const SingleDataCard(
+                          name: 'Hummidity',
+                          icon: Icon(Icons.cloud_outlined),
+                          data: 'Name',
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
             );
           },

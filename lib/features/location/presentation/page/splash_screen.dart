@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
         if (state is LocationLoadedState) {
+          log(state.toString());
           BlocProvider.of<WeatherBloc>(context).add(
               GetWeatherByAbsLocationEvent(
                   lon: state.locationEntity.lon,
