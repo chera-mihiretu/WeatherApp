@@ -62,7 +62,8 @@ void main() {
         return weatherBloc;
       },
       act: (bloc) => bloc.add(GetWeatherByAbsLocationEvent(
-          coordinateEntity: TestData.coordinateEntity)),
+          lon: TestData.coordinateEntity.lon,
+          lat: TestData.coordinateEntity.lat)),
       expect: () => [
         WeatherLoadingState(),
         WeatherLoadedState(fullWeatherEntity: TestData.fullWeatherEntity)
@@ -77,7 +78,8 @@ void main() {
         return weatherBloc;
       },
       act: (bloc) => bloc.add(GetWeatherByAbsLocationEvent(
-          coordinateEntity: TestData.coordinateEntity)),
+          lon: TestData.coordinateEntity.lon,
+          lat: TestData.coordinateEntity.lat)),
       expect: () =>
           [WeatherLoadingState(), WeatherErrorState(message: TestData.error)],
     );

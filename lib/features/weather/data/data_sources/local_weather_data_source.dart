@@ -91,6 +91,9 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
     try {
       time = getLastTime();
       coordinateModel = getLastCoordinate();
+      log(time);
+      log(coordinateModel.lat);
+      log(coordinateModel.lon);
       bool answer = false;
       double longDifference = (coord.lon - coordinateModel.lon).abs();
       double latDifference = (coord.lat - coordinateModel.lat).abs();

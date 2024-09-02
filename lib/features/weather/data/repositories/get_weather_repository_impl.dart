@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:weather/cores/exceptions/exception.dart';
 import 'package:weather/cores/exceptions/exception_errors.dart';
@@ -37,17 +39,20 @@ class GetWeatherRepositoryImpl extends GetWeatherRepository {
               .getWeatherByAbsLocation(CoordinateModel.fromEntity(coord));
           localWeatherDataSource.saveWeather(
               result); // will call all necessary finction internally
+
           return Right(result.toEntity());
         } on ServerException catch (e) {
           return Left(ServerFailure(e.message));
         }
       } else {
         final project = localWeatherDataSource.getLoadedWeather();
+
         return Right(project.toEntity());
       }
     } else {
       try {
         final result = localWeatherDataSource.getLoadedWeather();
+
         return Right(result.toEntity());
       } on CacheException catch (e) {
         return Left(CacheFailure(e.message));
