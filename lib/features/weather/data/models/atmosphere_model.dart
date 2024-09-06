@@ -1,25 +1,36 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather/features/weather/domain/entities/atmosphere_entity.dart';
 
+part 'atmosphere_model.g.dart';
+
+@HiveType(typeId: 1)
 class AtmosphereModel extends AtmosphereEntity {
   @override
+  @HiveField(0)
   // ignore: overridden_fields
   final double temp;
   @override
+  @HiveField(1)
   // ignore: overridden_fields
   final double tempMin;
   @override
+  @HiveField(2)
   // ignore: overridden_fields
   final double tempMax;
   @override
+  @HiveField(3)
   // ignore: overridden_fields
   final double pressure;
   @override
+  @HiveField(4)
   // ignore: overridden_fields
   final double humidity;
   @override
+  @HiveField(5)
   // ignore: overridden_fields
   final double seaLevel;
   @override
+  @HiveField(6)
   // ignore: overridden_fields
   final double grndLevel;
 

@@ -1,13 +1,20 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather/features/weather/domain/entities/sys_entity.dart';
 
+part 'sys_model.g.dart';
+
+@HiveType(typeId: 2)
 class SysModel extends SysEntity {
   @override
+  @HiveField(0)
   // ignore: overridden_fields
   final String country;
   @override
+  @HiveField(1)
   // ignore: overridden_fields
   final DateTime sunrise;
   @override
+  @HiveField(2)
   // ignore: overridden_fields
   final DateTime sunset;
 

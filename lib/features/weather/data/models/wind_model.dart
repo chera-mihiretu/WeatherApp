@@ -1,8 +1,21 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather/features/weather/domain/entities/wind_entity.dart';
 
+part 'wind_model.g.dart';
+
+@HiveType(typeId: 5)
 class WindModel extends WindEntity {
+  @override
+  @HiveField(0)
+  // ignore: overridden_fields
   final double speed;
+  @override
+  @HiveField(1)
+  // ignore: overridden_fields
   final double deg;
+  @override
+  @HiveField(2)
+  // ignore: overridden_fields
   final double gust;
 
   const WindModel({

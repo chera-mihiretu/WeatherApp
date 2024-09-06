@@ -1,4 +1,6 @@
 // ignore: depend_on_referenced_packages
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:weather/cores/failure/failure.dart';
@@ -30,6 +32,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     on<GetWeatherByAbsLocationEvent>((event, emit) async {
       emit(WeatherLoadingState());
       final coor = CoordinateEntity(lon: event.lon, lat: event.lat);
+      log('Weather bloc ${event.lat} ${event.lon}');
       final result = await getWeatherByAbsLocationUsecase.execute(coor);
       result.fold((failure) {
         emit(WeatherErrorState(message: failure.message));

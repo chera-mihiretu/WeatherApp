@@ -1,16 +1,24 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather/features/weather/domain/entities/weather_entity.dart';
 
+part 'weather_model.g.dart';
+
+@HiveType(typeId: 4)
 class WeatherModel extends WeatherEntity {
   @override
+  @HiveField(0)
   // ignore: overridden_fields
   final int id;
   @override
+  @HiveField(1)
   // ignore: overridden_fields
   final String main;
   @override
+  @HiveField(2)
   // ignore: overridden_fields
   final String description;
   @override
+  @HiveField(3)
   // ignore: overridden_fields
   final String icon;
 

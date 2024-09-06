@@ -1,5 +1,5 @@
-import 'dart:math';
-
+import 'dart:developer';
+import 'dart:math' as math;
 import 'package:hive/hive.dart';
 import 'package:weather/cores/constants/constants.dart';
 import 'package:weather/cores/exceptions/exception.dart';
@@ -36,6 +36,7 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
     final CoordinateModel? coordinateModel =
         lastCoordinate.get(AppData.coordinateStorage);
     if (coordinateModel == null) {
+      log('[LOCAL DATA SOURCE] -> No coordinate found');
       throw CacheException(message: ExceptionErrors.dataNotFound);
     } else {
       return coordinateModel;
@@ -46,6 +47,7 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
   int getLastTime() {
     final int? time = lastTime.get(AppData.coordinateStorage);
     if (time == null) {
+      log('[LOCAL DATA SOURCE] -> No time found');
       throw CacheException(message: ExceptionErrors.dataNotFound);
     } else {
       return time;
@@ -56,6 +58,7 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
   FullWeatherModel getLoadedWeather() {
     FullWeatherModel? result = lastWeather.get(AppData.weatherStorage);
     if (result == null) {
+      log('[LOCAL DATA SOURCE] -> No weather found');
       throw CacheException(message: ExceptionErrors.dataNotFound);
     } else {
       return result;
@@ -64,12 +67,15 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
 
   @override
   bool saveCoordinate(CoordinateModel coord) {
+    log('[LOCAL DATA SOURCE] -> coordinate saved');
     lastCoordinate.put(AppData.coordinateStorage, coord);
     return true;
   }
 
   @override
   bool saveDate() {
+    log('[LOCAL DATA SOURCE] -> time saved');
+
     int time = DateTime.now().millisecondsSinceEpoch;
     lastTime.put(AppData.timeStorage, time);
 
@@ -78,7 +84,10 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
 
   @override
   bool saveWeather(FullWeatherModel weather) {
+    log('[LOCAL DATA SOURCE] -> weather saved');
+
     lastWeather.put(AppData.weatherStorage, weather);
+
     saveCoordinate(weather.coordinateModel);
     saveDate();
     return true;
@@ -91,14 +100,13 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
     try {
       time = getLastTime();
       coordinateModel = getLastCoordinate();
-      log(time);
-      log(coordinateModel.lat);
-      log(coordinateModel.lon);
+
       bool answer = false;
       double longDifference = (coord.lon - coordinateModel.lon).abs();
       double latDifference = (coord.lat - coordinateModel.lat).abs();
 
-      double distance = sqrt((pow(longDifference, 2) + pow(latDifference, 2)));
+      double distance =
+          math.sqrt((math.pow(longDifference, 2) + math.pow(latDifference, 2)));
 
       if (distance > 0.28) {
         answer = true;

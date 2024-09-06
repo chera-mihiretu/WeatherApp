@@ -13,8 +13,13 @@ import 'package:weather/features/location/presentation/bloc/location_bloc.dart';
 import 'package:weather/features/weather/data/data_sources/local_weather_data_source.dart';
 import 'package:weather/features/weather/data/data_sources/remote_weather_data_source.dart';
 import 'package:http/http.dart' as http;
+import 'package:weather/features/weather/data/models/atmosphere_model.dart';
 import 'package:weather/features/weather/data/models/coordinate_model.dart';
+import 'package:weather/features/weather/data/models/date_time_adapter.dart';
 import 'package:weather/features/weather/data/models/full_weather_model.dart';
+import 'package:weather/features/weather/data/models/sys_model.dart';
+import 'package:weather/features/weather/data/models/weather_model.dart';
+import 'package:weather/features/weather/data/models/wind_model.dart';
 import 'package:weather/features/weather/data/repositories/get_weather_repository_impl.dart';
 import 'package:weather/features/weather/domain/repositories/get_weather_repository.dart';
 import 'package:weather/features/weather/domain/usecases/get_weather_by_abs_location_usecase.dart';
@@ -27,6 +32,17 @@ final locator = GetIt.instance;
 Future<void> init() async {
   //! loading necessary data
   await Hive.initFlutter();
+  //!==============================================!//
+  //!         Registering Hive Adapters            !//
+  //!==============================================!//
+  Hive.registerAdapter(DateTimeAdapter());
+  Hive.registerAdapter(SysModelAdapter());
+  Hive.registerAdapter(WeatherModelAdapter());
+  Hive.registerAdapter(WindModelAdapter());
+  Hive.registerAdapter(AtmosphereModelAdapter());
+  Hive.registerAdapter(CoordinateModelAdapter());
+  Hive.registerAdapter(FullWeatherModelAdapter());
+
   await dotenv.load();
   //! enviroment
   locator.registerLazySingleton(() => EnvDataLoader());

@@ -39,11 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
         if (state is LocationLoadedState) {
-          log(state.toString());
           BlocProvider.of<WeatherBloc>(context).add(
-              GetWeatherByAbsLocationEvent(
-                  lon: state.locationEntity.lon,
-                  lat: state.locationEntity.lat));
+            GetWeatherByAbsLocationEvent(
+                lon: state.locationEntity.lon, lat: state.locationEntity.lat),
+          );
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (_) => const WeatherScreen()));
         } else if (state is LocationErrorState) {
