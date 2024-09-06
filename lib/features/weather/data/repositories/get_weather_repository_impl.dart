@@ -41,7 +41,8 @@ class GetWeatherRepositoryImpl extends GetWeatherRepository {
         try {
           final result = await remoteWeatherDataSource
               .getWeatherByAbsLocation(CoordinateModel.fromEntity(coord));
-          localWeatherDataSource.saveWeather(
+
+          await localWeatherDataSource.saveWeather(
               result); // will call all necessary finction internally
 
           return Right(result.toEntity());

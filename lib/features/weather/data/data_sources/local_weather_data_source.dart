@@ -13,9 +13,9 @@ abstract class LocalWeatherDataSource {
   CoordinateModel getLastCoordinate();
   int getLastTime();
   //! Setting datas
-  bool saveWeather(FullWeatherModel weather);
-  bool saveDate();
-  bool saveCoordinate(CoordinateModel coord);
+  Future<bool> saveWeather(FullWeatherModel weather);
+  Future<bool> saveDate();
+  Future<bool> saveCoordinate(CoordinateModel coord);
   //! calculation of relod
   bool shouldRelod(CoordinateModel coord);
 }
@@ -45,7 +45,9 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
 
   @override
   int getLastTime() {
-    final int? time = lastTime.get(AppData.coordinateStorage);
+    final int? time = lastTime.get(AppData.timeStorage);
+    log('[TIME LOAD] $time');
+
     if (time == null) {
       log('[LOCAL DATA SOURCE] -> No time found');
       throw CacheException(message: ExceptionErrors.dataNotFound);
@@ -58,7 +60,6 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
   FullWeatherModel getLoadedWeather() {
     FullWeatherModel? result = lastWeather.get(AppData.weatherStorage);
     if (result == null) {
-      log('[LOCAL DATA SOURCE] -> No weather found');
       throw CacheException(message: ExceptionErrors.dataNotFound);
     } else {
       return result;
@@ -66,30 +67,29 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
   }
 
   @override
-  bool saveCoordinate(CoordinateModel coord) {
-    log('[LOCAL DATA SOURCE] -> coordinate saved');
-    lastCoordinate.put(AppData.coordinateStorage, coord);
+  Future<bool> saveCoordinate(CoordinateModel coord) async {
+    await lastCoordinate.put(AppData.coordinateStorage, coord);
     return true;
   }
 
   @override
-  bool saveDate() {
-    log('[LOCAL DATA SOURCE] -> time saved');
-
+  Future<bool> saveDate() async {
     int time = DateTime.now().millisecondsSinceEpoch;
-    lastTime.put(AppData.timeStorage, time);
+    await lastTime.put(AppData.timeStorage, time);
 
     return true;
   }
 
   @override
-  bool saveWeather(FullWeatherModel weather) {
-    log('[LOCAL DATA SOURCE] -> weather saved');
+  Future<bool> saveWeather(FullWeatherModel weather) async {
+    try {
+      lastWeather.put(AppData.weatherStorage, weather);
+      await saveCoordinate(weather.coordinateModel);
+      await saveDate();
+    } on Exception {
+      throw CacheException(message: ExceptionErrors.dataNotFound);
+    }
 
-    lastWeather.put(AppData.weatherStorage, weather);
-
-    saveCoordinate(weather.coordinateModel);
-    saveDate();
     return true;
   }
 
@@ -99,6 +99,7 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
     late CoordinateModel coordinateModel;
     try {
       time = getLastTime();
+
       coordinateModel = getLastCoordinate();
 
       bool answer = false;
@@ -120,6 +121,7 @@ class LocalWeatherDataSourceImpl extends LocalWeatherDataSource {
 
       return answer;
     } on CacheException {
+      log('[LOCAL DATA SOURCE] -> Exception Thrown');
       return true;
     }
   }
