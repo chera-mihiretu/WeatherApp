@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:weather/features/weather/data/models/atmosphere_model.dart';
 import 'package:weather/features/weather/data/models/coordinate_model.dart';
 import 'package:weather/features/weather/data/models/sys_model.dart';
 import 'package:weather/features/weather/data/models/weather_model.dart';
@@ -9,6 +10,10 @@ part 'full_weather_model.g.dart';
 
 @HiveType(typeId: 6)
 class FullWeatherModel extends FullWeatherEntity {
+  // ignore: overridden_fields
+  @HiveField(0)
+  final AtmosphereModel atmModel;
+
   // ignore: overridden_fields
   @HiveField(0)
   final CoordinateModel coordinateModel;
@@ -30,6 +35,7 @@ class FullWeatherModel extends FullWeatherEntity {
   // ignore: overridden_fields
   final String name;
   const FullWeatherModel({
+    required this.atmModel,
     required this.coordinateModel,
     required this.weatherModels,
     required this.visiblity,
@@ -37,6 +43,7 @@ class FullWeatherModel extends FullWeatherEntity {
     required this.sysModel,
     required this.name,
   }) : super(
+          atmEntity: atmModel,
           coordinateEntity: coordinateModel,
           weatherEntity: weatherModels,
           visiblity: visiblity,
@@ -46,6 +53,7 @@ class FullWeatherModel extends FullWeatherEntity {
         );
   factory FullWeatherModel.fromJson(Map<String, dynamic> json) {
     return FullWeatherModel(
+      atmModel: AtmosphereModel.fromJson(json['main']),
       coordinateModel: CoordinateModel.fromJson(json['coord']),
       weatherModels: WeatherModel.fromJsonList(json['weather']),
       visiblity: json['visibility'].toDouble(),

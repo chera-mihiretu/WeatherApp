@@ -44,14 +44,22 @@ class WeatherScreen extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          'Nekemt',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ),
+                    BlocBuilder<WeatherBloc, WeatherState>(
+                      builder: (context, state) {
+                        String country = 'Home';
+                        if (state is WeatherLoadedState) {
+                          country = state.fullWeatherEntity.name;
+                        }
+                        return Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              country,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     IconButton(
                       onPressed: () {},
@@ -62,9 +70,18 @@ class WeatherScreen extends StatelessWidget {
                 ),
               ),
               const IconDisplay(icon: 'assets/icons/partially_cloud.png'),
-              const WeatherData(
-                temp: 23.5,
-                type: 'Sunny',
+              BlocBuilder<WeatherBloc, WeatherState>(
+                builder: (context, state) {
+                  double temp = 0;
+                  String weather = 'Loading...';
+                  if (state is WeatherLoadedState) {
+                    temp = state.fullWeatherEntity.
+                  }
+                  return WeatherData(
+                    temp: temp,
+                    type: weather,
+                  );
+                },
               ),
               const Expanded(child: SizedBox())
             ],
