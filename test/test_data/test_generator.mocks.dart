@@ -350,31 +350,33 @@ class MockLocalWeatherDataSource extends _i1.Mock
       ) as int);
 
   @override
-  bool saveWeather(_i3.FullWeatherModel? weather) => (super.noSuchMethod(
+  _i9.Future<bool> saveWeather(_i3.FullWeatherModel? weather) =>
+      (super.noSuchMethod(
         Invocation.method(
           #saveWeather,
           [weather],
         ),
-        returnValue: false,
-      ) as bool);
+        returnValue: _i9.Future<bool>.value(false),
+      ) as _i9.Future<bool>);
 
   @override
-  bool saveDate() => (super.noSuchMethod(
+  _i9.Future<bool> saveDate() => (super.noSuchMethod(
         Invocation.method(
           #saveDate,
           [],
         ),
-        returnValue: false,
-      ) as bool);
+        returnValue: _i9.Future<bool>.value(false),
+      ) as _i9.Future<bool>);
 
   @override
-  bool saveCoordinate(_i4.CoordinateModel? coord) => (super.noSuchMethod(
+  _i9.Future<bool> saveCoordinate(_i4.CoordinateModel? coord) =>
+      (super.noSuchMethod(
         Invocation.method(
           #saveCoordinate,
           [coord],
         ),
-        returnValue: false,
-      ) as bool);
+        returnValue: _i9.Future<bool>.value(false),
+      ) as _i9.Future<bool>);
 
   @override
   bool shouldRelod(_i4.CoordinateModel? coord) => (super.noSuchMethod(

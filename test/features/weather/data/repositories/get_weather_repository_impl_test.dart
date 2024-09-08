@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -34,9 +32,11 @@ void main() {
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       when(mockLocalWeatherDataSource.shouldRelod(TestData.coordinateModel))
           .thenReturn(true);
-      when(mockLocalWeatherDataSource.saveCoordinate(any)).thenReturn(true);
-      when(mockLocalWeatherDataSource.saveDate()).thenReturn(true);
-      when(mockLocalWeatherDataSource.saveWeather(any)).thenReturn(true);
+      when(mockLocalWeatherDataSource.saveCoordinate(any))
+          .thenAnswer((_) async => true);
+      when(mockLocalWeatherDataSource.saveDate()).thenAnswer((_) async => true);
+      when(mockLocalWeatherDataSource.saveWeather(any))
+          .thenAnswer((_) async => true);
     });
 
     group('Network info should be called and api also should be called', () {

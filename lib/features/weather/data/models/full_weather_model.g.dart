@@ -17,30 +17,33 @@ class FullWeatherModelAdapter extends TypeAdapter<FullWeatherModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FullWeatherModel(
-      coordinateModel: fields[0] as CoordinateModel,
-      weatherModels: (fields[1] as List).cast<WeatherModel>(),
-      visiblity: fields[2] as double,
-      windModel: fields[3] as WindModel,
-      sysModel: fields[4] as SysModel,
-      name: fields[5] as String,
+      atmModel: fields[0] as AtmosphereModel,
+      coordinateModel: fields[1] as CoordinateModel,
+      weatherModels: (fields[2] as List).cast<WeatherModel>(),
+      visiblity: fields[3] as double,
+      windModel: fields[4] as WindModel,
+      sysModel: fields[5] as SysModel,
+      name: fields[6] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, FullWeatherModel obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
-      ..write(obj.coordinateModel)
+      ..write(obj.atmModel)
       ..writeByte(1)
-      ..write(obj.weatherModels)
+      ..write(obj.coordinateModel)
       ..writeByte(2)
-      ..write(obj.visiblity)
+      ..write(obj.weatherModels)
       ..writeByte(3)
-      ..write(obj.windModel)
+      ..write(obj.visiblity)
       ..writeByte(4)
-      ..write(obj.sysModel)
+      ..write(obj.windModel)
       ..writeByte(5)
+      ..write(obj.sysModel)
+      ..writeByte(6)
       ..write(obj.name);
   }
 

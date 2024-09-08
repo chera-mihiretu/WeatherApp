@@ -8,20 +8,20 @@ class WindModel extends WindEntity {
   @override
   @HiveField(0)
   // ignore: overridden_fields
-  final double speed;
+  final double? speed;
   @override
   @HiveField(1)
   // ignore: overridden_fields
-  final double deg;
+  final double? deg;
   @override
   @HiveField(2)
   // ignore: overridden_fields
-  final double gust;
+  final double? gust;
 
   const WindModel({
-    required this.speed,
-    required this.deg,
-    required this.gust,
+    this.speed,
+    this.deg,
+    this.gust,
   }) : super(
           speed: speed,
           deg: deg,
@@ -29,7 +29,8 @@ class WindModel extends WindEntity {
         );
 
   // Convert JSON to WindModel
-  factory WindModel.fromJson(Map<String, dynamic> json) {
+  factory WindModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return const WindModel();
     return WindModel(
       speed: json['speed'].toDouble(),
       deg: json['deg'].toDouble(),

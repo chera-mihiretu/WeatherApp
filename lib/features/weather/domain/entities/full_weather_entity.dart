@@ -22,10 +22,10 @@ class FullWeatherEntity extends Equatable {
     required this.windEntity,
     required this.sysEntity,
     required this.name,
-    required AtmosphereEntity atmModel,
   });
   @override
   List<Object?> get props => [
+        atmEntity,
         coordinateEntity,
         weatherEntity,
         windEntity,

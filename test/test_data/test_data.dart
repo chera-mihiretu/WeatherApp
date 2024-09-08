@@ -101,6 +101,7 @@ class TestData {
 
   //! Full Weather
   static FullWeatherModel fullWeatherModel = FullWeatherModel(
+    atmModel: atmosphereModel,
     coordinateModel: coordinateModel,
     weatherModels: [weatherModel],
     visiblity: 10000,
@@ -109,6 +110,7 @@ class TestData {
     name: 'Nazrēt',
   );
   static FullWeatherEntity fullWeatherEntity = FullWeatherEntity(
+    atmEntity: atmosphereEntity,
     coordinateEntity: coordinateEntity,
     weatherEntity: [weatherEntity],
     visiblity: 10000,

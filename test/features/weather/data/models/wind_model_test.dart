@@ -21,5 +21,12 @@ void main() {
       /// assert
       expect(TestData.windModel.toEntity(), TestData.windEntity);
     });
+
+    test('Whenever empty json is given the model must be empty', () {
+      final result = WindModel.fromJson(null);
+
+      // assert
+      expect(result, const WindModel());
+    });
   });
 }

@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/cores/theme/theme.dart';
 import 'package:weather/features/weather/presentation/bloc/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/widgets/export_files.dart';
 import 'package:weather/features/weather/presentation/widgets/icon_display.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 class WeatherScreen extends StatelessWidget {
   static const String routes = '/weather_screen';
@@ -73,13 +76,15 @@ class WeatherScreen extends StatelessWidget {
               BlocBuilder<WeatherBloc, WeatherState>(
                 builder: (context, state) {
                   double temp = 0;
-                  String weather = 'Loading...';
+                  String weatherType = 'Loading...';
                   if (state is WeatherLoadedState) {
-                    temp = state.fullWeatherEntity.
+                    log(state.fullWeatherEntity.name);
+                    temp = state.fullWeatherEntity.atmEntity.temp;
+                    weatherType = state.fullWeatherEntity.weatherEntity[0].main;
                   }
                   return WeatherData(
                     temp: temp,
-                    type: weather,
+                    type: weatherType,
                   );
                 },
               ),
@@ -97,6 +102,25 @@ class WeatherScreen extends StatelessWidget {
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
               child: BlocBuilder<WeatherBloc, WeatherState>(
                 builder: (context, state) {
+                  if (state is WeatherLoadedState) {
+                    List<SingleDataCard> toDisplay = [
+                      SingleDataCard(
+                        name: 'Hummidity',
+                        icon: const Icon(WeatherIcons.humidity),
+                        data: state.fullWeatherEntity.atmEntity.humidity,
+                      ),
+                      SingleDataCard(
+                        name: 'Max temp',
+                        icon: const Icon(WeatherIcons.thermometer),
+                        data: state.fullWeatherEntity.atmEntity.tempMax,
+                      ),
+                      SingleDataCard(
+                        name: 'Min temp',
+                        icon: const Icon(WeatherIcons.thermometer),
+                        data: state.fullWeatherEntity.atmEntity.tempMin,
+                      ),
+                    ];
+                  }
                   return Container(
                     color: const Color.fromARGB(255, 255, 255, 255),
                     child: GridView.builder(

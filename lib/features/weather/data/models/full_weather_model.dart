@@ -15,23 +15,23 @@ class FullWeatherModel extends FullWeatherEntity {
   final AtmosphereModel atmModel;
 
   // ignore: overridden_fields
-  @HiveField(0)
+  @HiveField(1)
   final CoordinateModel coordinateModel;
   // ignore: overridden_fields
-  @HiveField(1)
+  @HiveField(2)
   final List<WeatherModel> weatherModels;
   @override
-  @HiveField(2)
-  // ignore: overridden_fields
-  final double visiblity;
   @HiveField(3)
   // ignore: overridden_fields
-  final WindModel windModel;
+  final double visiblity;
   @HiveField(4)
+  // ignore: overridden_fields
+  final WindModel windModel;
+  @HiveField(5)
   // ignore: overridden_fields
   final SysModel sysModel;
   @override
-  @HiveField(5)
+  @HiveField(6)
   // ignore: overridden_fields
   final String name;
   const FullWeatherModel({
@@ -65,6 +65,7 @@ class FullWeatherModel extends FullWeatherEntity {
 
   FullWeatherEntity toEntity() {
     return FullWeatherEntity(
+        atmEntity: atmModel.toEntity(),
         coordinateEntity: coordinateModel.toEntity(),
         weatherEntity: weatherModels.map((model) => model.toEntity()).toList(),
         visiblity: visiblity,
