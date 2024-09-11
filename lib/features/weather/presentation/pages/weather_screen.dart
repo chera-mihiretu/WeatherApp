@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather/cores/constants/constants.dart';
 import 'package:weather/cores/theme/theme.dart';
 import 'package:weather/features/weather/presentation/bloc/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/widgets/export_files.dart';
@@ -72,19 +73,43 @@ class WeatherScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const IconDisplay(icon: 'assets/icons/partially_cloud.png'),
+              BlocBuilder<WeatherBloc, WeatherState>(
+                builder: (context, state) {
+                  String path = 'assets/icons/partially_cloud.png';
+                  if (state is WeatherLoadedState) {
+                    path = AppData.getIconImage(state
+                        .fullWeatherEntity.weatherEntity[0].icon
+                        .replaceAll('n', 'd'));
+                    log(state.fullWeatherEntity.weatherEntity[0].icon
+                        .replaceAll('n', 'd'));
+                  }
+                  log(path);
+                  return IconDisplay(icon: path);
+                },
+              ),
               BlocBuilder<WeatherBloc, WeatherState>(
                 builder: (context, state) {
                   double temp = 0;
                   String weatherType = 'Loading...';
+                  String weatherDesc = 'Loading...';
                   if (state is WeatherLoadedState) {
+                    weatherDesc =
+                        state.fullWeatherEntity.weatherEntity[0].description;
                     log(state.fullWeatherEntity.name);
                     temp = state.fullWeatherEntity.atmEntity.temp;
                     weatherType = state.fullWeatherEntity.weatherEntity[0].main;
                   }
-                  return WeatherData(
-                    temp: temp,
-                    type: weatherType,
+                  return Column(
+                    children: [
+                      WeatherData(
+                        temp: temp,
+                        type: weatherType,
+                      ),
+                      Text(
+                        weatherDesc,
+                        style: Theme.of(context).textTheme.displaySmall,
+                      )
+                    ],
                   );
                 },
               ),
@@ -95,7 +120,7 @@ class WeatherScreen extends StatelessWidget {
         DraggableScrollableSheet(
           initialChildSize: 0.2, // Initial size of the sheet
           minChildSize: 0.2, // Minimum size of the sheet
-          maxChildSize: .55, // Maximum size of the sheet
+          maxChildSize: .35, // Maximum size of the sheet
           builder: (context, scroll) {
             return ClipRRect(
               borderRadius: const BorderRadius.only(

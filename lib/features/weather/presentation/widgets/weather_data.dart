@@ -18,7 +18,7 @@ class WeatherData extends StatelessWidget {
         Text(
           type,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.displaySmall,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
       ],
     );

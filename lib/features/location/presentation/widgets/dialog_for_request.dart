@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:weather/cores/theme/theme.dart';
 
 class DialogForRequest extends StatelessWidget {
   final VoidCallback press;
@@ -32,42 +33,43 @@ class DialogForRequest extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
                   child: Text(
                     'Please enable location, or grant the location permission',
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(22.0),
-                      child: FilledButton(
-                        onPressed: press,
-                        child: Text(
-                          'Done',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: MyTheme.backgroundLight,
+                      ),
+                      onPressed: press,
+                      child: Text(
+                        'Done',
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(22.0),
-                      child: FilledButton(
-                        onPressed: () {
-                          SystemNavigator.pop();
-                        },
-                        child: Text(
-                          'No Thank you!',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
+                    FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: MyTheme.backgroundLight,
+                      ),
+                      onPressed: () {
+                        SystemNavigator.pop();
+                      },
+                      child: Text(
+                        'No Thank you!',
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )
             ],
           ),
