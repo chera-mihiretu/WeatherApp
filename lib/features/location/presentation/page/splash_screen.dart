@@ -36,64 +36,70 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LocationBloc, LocationState>(
+    return BlocListener<WeatherBloc, WeatherState>(
       listener: (context, state) {
-        if (state is LocationLoadedState) {
-          BlocProvider.of<WeatherBloc>(context).add(
-            GetWeatherByAbsLocationEvent(
-                lon: state.locationEntity.lon, lat: state.locationEntity.lat),
-          );
+        if (state is WeatherLoadedState) {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (_) => const WeatherScreen()));
-        } else if (state is LocationErrorState) {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return DialogForRequest(press: () {
-                  BlocProvider.of<LocationBloc>(context)
-                      .add(GetLocationEvent());
-                  Navigator.pop(context);
-                });
-              });
         }
       },
-      child: Scaffold(
-        body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  MyTheme.backgroundLight,
-                  MyTheme.backgroundDark,
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+      child: BlocListener<LocationBloc, LocationState>(
+        listener: (context, state) {
+          if (state is LocationLoadedState) {
+            BlocProvider.of<WeatherBloc>(context).add(
+              GetWeatherByAbsLocationEvent(
+                  lon: state.locationEntity.lon, lat: state.locationEntity.lat),
+            );
+          } else if (state is LocationErrorState) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return DialogForRequest(press: () {
+                    BlocProvider.of<LocationBloc>(context)
+                        .add(GetLocationEvent());
+                    Navigator.pop(context);
+                  });
+                });
+          }
+        },
+        child: Scaffold(
+          body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    MyTheme.backgroundLight,
+                    MyTheme.backgroundDark,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Image.asset(
-                  width: MediaQuery.of(context).size.width / 3,
-                  height: MediaQuery.of(context).size.width / 3,
-                  'assets/icons/partially_cloud.png',
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 4,
-                ),
-                Text(
-                  AppData.appName,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                const SpinKitWave(
-                  color: Colors.white,
-                )
-              ],
-            )),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Image.asset(
+                    width: MediaQuery.of(context).size.width / 3,
+                    height: MediaQuery.of(context).size.width / 3,
+                    'assets/icons/partially_cloud.png',
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 4,
+                  ),
+                  Text(
+                    AppData.appName,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displayLarge,
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const SpinKitWave(
+                    color: Colors.white,
+                  )
+                ],
+              )),
+        ),
       ),
     );
   }
