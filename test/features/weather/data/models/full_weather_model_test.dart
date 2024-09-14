@@ -1,7 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:weather/features/weather/data/models/atmosphere_model.dart';
 import 'package:weather/features/weather/data/models/full_weather_model.dart';
-import 'package:weather/features/weather/domain/entities/atmosphere_entity.dart';
 import 'package:weather/features/weather/domain/entities/full_weather_entity.dart';
 
 import '../../../../test_data/test_data.dart';

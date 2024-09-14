@@ -6,8 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:weather/cores/constants/constants.dart';
 import 'package:weather/cores/theme/theme.dart';
+import 'package:weather/features/location/presentation/widgets/dialog_for_request.dart';
 import 'package:weather/features/weather/domain/entities/full_weather_entity.dart';
 import 'package:weather/features/weather/presentation/bloc/bloc/weather_bloc.dart';
+import 'package:weather/features/weather/presentation/widgets/dialog_for_city.dart';
 import 'package:weather/features/weather/presentation/widgets/export_files.dart';
 import 'package:weather/features/weather/presentation/widgets/icon_display.dart';
 import 'package:weather_icons/weather_icons.dart';
@@ -33,6 +35,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
     return BlocListener<WeatherBloc, WeatherState>(
       listener: (context, state) {
         if (state is WeatherSearchLoadedState) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return DialogForCity(myWeatherEntity: state.fullWeatherEntity);
+              });
         } else if (state is WeatherErrorState) {
           Fluttertoast.showToast(
             msg: state.message,
@@ -147,11 +154,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       path = AppData.getIconImage(myWeatherEntity!
                           .weatherEntity[0].icon
                           .replaceAll('n', 'd'));
-                      log(myWeatherEntity!.weatherEntity[0].icon
-                          .replaceAll('n', 'd'));
                     }
 
-                    return IconDisplay(icon: path);
+                    return IconDisplay(
+                      icon: path,
+                      height: MediaQuery.of(context).size.height / 3,
+                      width: MediaQuery.of(context).size.width / 3,
+                    );
                   },
                 ),
                 BlocBuilder<WeatherBloc, WeatherState>(

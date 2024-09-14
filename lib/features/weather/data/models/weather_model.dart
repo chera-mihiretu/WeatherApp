@@ -22,7 +22,7 @@ class WeatherModel extends WeatherEntity {
   // ignore: overridden_fields
   final String icon;
 
-  WeatherModel({
+  const WeatherModel({
     required this.id,
     required this.main,
     required this.description,

@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:weather/cores/failure/failure.dart';
 import 'package:weather/features/weather/domain/usecases/get_weather_by_abs_location_usecase.dart';
-import 'package:weather/features/weather/domain/usecases/get_weather_by_city_name_usecase.dart';
 
 import '../../../../test_data/test_data.dart';
 import '../../../../test_data/test_generator.mocks.dart';

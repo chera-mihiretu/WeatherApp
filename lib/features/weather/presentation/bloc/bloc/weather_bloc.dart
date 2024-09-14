@@ -7,7 +7,6 @@ import 'package:equatable/equatable.dart';
 import 'package:weather/cores/constants/constants.dart';
 import 'package:weather/features/weather/domain/entities/coordinate_entity.dart';
 import 'package:weather/features/weather/domain/entities/full_weather_entity.dart';
-import 'package:weather/features/weather/domain/entities/weather_entity.dart';
 import 'package:weather/features/weather/domain/usecases/get_weather_by_abs_location_usecase.dart';
 import 'package:weather/features/weather/domain/usecases/get_weather_by_city_name_usecase.dart';
 
@@ -22,19 +21,20 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       required this.getWeatherByCityNameUsecase})
       : super(WeatherInitial()) {
     on<GetWeatherByCiyNameEvent>((event, emit) async {
-      log('search by city');
       if (event.cityName.isEmpty) {
-        log('Error from input');
         emit(const WeatherErrorState(message: AppData.inputError));
-        log('Error from input, Emitted');
       } else {
         emit(WeatherLoadingState());
 
         final result =
             await getWeatherByCityNameUsecase.execute(event.cityName);
         result.fold((failure) {
+          log('[WEATHER BLOC] message failure');
           emit(WeatherErrorState(message: failure.message));
         }, (data) {
+          log('[WEATHER BLOC] We successfully loaded the data');
+          log(data.name);
+          log(data.visiblity.toString());
           emit(WeatherSearchLoadedState(fullWeatherEntity: data));
         });
       }
@@ -42,7 +42,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     on<GetWeatherByAbsLocationEvent>((event, emit) async {
       emit(WeatherLoadingState());
       final coor = CoordinateEntity(lon: event.lon, lat: event.lat);
-      log('Weather bloc ${event.lat} ${event.lon}');
+
       final result = await getWeatherByAbsLocationUsecase.execute(coor);
       result.fold((failure) {
         emit(WeatherErrorState(message: failure.message));

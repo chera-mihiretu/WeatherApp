@@ -42,3 +42,8 @@
   "name": "Nazrēt",
   "cod": 200
 }
+
+
+
+
+{coord: {lon: 38.7469, lat: 9.025}, weather: [{id: 501, main: Rain, description: moderate rain, icon: 10n}], base: stations, main: {temp: 288.64, feels_like: 288.39, temp_min: 288.64, temp_max: 288.64, pressure: 1020, humidity: 82, sea_level: 1020, grnd_level: 772}, visibility: 10000, wind: {speed: 2.06, deg: 330}, rain: {1h: 1.75}, clouds: {all: 75}, dt: 1726340335, sys: {type: 1, id: 2453, country: ET, sunrise: 1726283711, sunset: 1726327566}, timezone: 10800, id: 344979, name: Addis Ababa, cod: 200}

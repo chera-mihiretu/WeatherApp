@@ -27,17 +27,14 @@ class GetWeatherRepositoryImpl extends GetWeatherRepository {
   @override
   Future<Either<Failure, FullWeatherEntity>> getWeatherByAbsoluteLocation(
       CoordinateEntity coord) async {
-    log('[REPOSITORY IMPLEMENTATION] ->  is called');
     final connection = await networkInfo
         .isConnected; // to check if mobile is connected to data or not
 
     if (connection) {
-      log('[REPOSITORY IMPLEMENTATION] -> Data is connected');
       final bool shouldRelod = localWeatherDataSource.shouldRelod(
           CoordinateModel.fromEntity(
               coord)); // to tell if the api should be called or not
       if (shouldRelod) {
-        log('[REPOSITORY IMPLEMENTATION] -> Loading from internet');
         try {
           final result = await remoteWeatherDataSource
               .getWeatherByAbsLocation(CoordinateModel.fromEntity(coord));
@@ -50,7 +47,6 @@ class GetWeatherRepositoryImpl extends GetWeatherRepository {
           return Left(ServerFailure(e.message));
         }
       } else {
-        log('[REPOSITORY IMPLEMENTATION] -> Loading from local');
         final project = localWeatherDataSource.getLoadedWeather();
 
         return Right(project.toEntity());
@@ -72,10 +68,16 @@ class GetWeatherRepositoryImpl extends GetWeatherRepository {
     final connection = await networkInfo.isConnected;
     if (connection) {
       try {
+        log('[REPOSITORY IMPL WEATHER] getting data from remote');
         final result =
             await remoteWeatherDataSource.getWeatherByCityName(cityName);
+
+        log('[REPOSITORY IMPL WEATHER] no problem during conversion');
+
         return Right(result.toEntity());
       } on ServerException catch (e) {
+        log('[REPOSITORY IMPL WEATHER] ${e.message}');
+
         return Left(ServerFailure(e.message));
       }
     } else {

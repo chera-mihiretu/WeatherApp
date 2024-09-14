@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 // ignore: depend_on_referenced_packages
+import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;
 import 'package:weather/features/location/data/model/location_model.dart';
 import 'package:weather/features/location/domain/entities/location_entity.dart';
@@ -26,14 +28,14 @@ class TestData {
       const LocationEntity(lon: 39.2705, lat: 8.541, alt: 10);
 
   //! Weather model
-  static WeatherEntity weatherEntity = WeatherEntity(
+  static WeatherEntity weatherEntity = const WeatherEntity(
     id: 804,
     main: 'Clouds',
     description: 'overcast clouds',
     icon: '04d',
   );
 
-  static WeatherModel weatherModel = WeatherModel(
+  static WeatherModel weatherModel = const WeatherModel(
     id: 804,
     main: 'Clouds',
     description: 'overcast clouds',
@@ -187,5 +189,5 @@ class TestData {
 
 void main() {
   final result = TestData.readJson();
-  print(result);
+  debugPrint(result);
 }

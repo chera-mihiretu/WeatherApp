@@ -4,7 +4,7 @@ class AppData {
   static const String baseUrl = 'BASE_URL';
   static const String apiKey = 'API_KEY';
   static String weatherByNameUrl(String url, String cityName, String apiKey) =>
-      '$url?q=$cityName&appid=$apiKey';
+      '$url?q=$cityName&appid=$apiKey&units=metric';
   static String weatherByLongAndLat(
           String url, CoordinateModel coord, String apiKey) =>
       '$url?lat=${coord.lat}&lon=${coord.lon}&appid=$apiKey&units=metric';

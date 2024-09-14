@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:weather/cores/constants/constants.dart';
@@ -30,6 +31,7 @@ class RemoteWeatherDataSourceImpl extends RemoteWeatherDataSource {
     if (apiKey != null && baseUrl != null) {
       try {
         final String url = AppData.weatherByLongAndLat(baseUrl, coord, apiKey);
+
         final result = await client
             .get(Uri.parse(url))
             .timeout(const Duration(seconds: 20));
@@ -56,16 +58,19 @@ class RemoteWeatherDataSourceImpl extends RemoteWeatherDataSource {
   Future<FullWeatherModel> getWeatherByCityName(String cityName) async {
     final String? apiKey = await envDataLoader.getApiKey();
     final String? baseUrl = await envDataLoader.getBaseUrl();
-
+    log('[REMOTE WEATHER CITY NAME] getting api key and base url');
     if (apiKey != null && baseUrl != null) {
       try {
         final String url = AppData.weatherByNameUrl(baseUrl, cityName, apiKey);
+        log('[REMOTE WEATHER CITY NAME] url $url');
         final result = await client
             .get(Uri.parse(url))
             .timeout(const Duration(seconds: 20));
+        log('[REMOTE WEATHER CITY NAME] ${result.body}');
         final mapResult = json.decode(result.body);
 
         if (result.statusCode == 200) {
+          log('[REMOTE WEATHER CITY NAME] Sending data to entity');
           return FullWeatherModel.fromJson(mapResult);
         } else {
           throw ServerException(message: mapResult['message']);
