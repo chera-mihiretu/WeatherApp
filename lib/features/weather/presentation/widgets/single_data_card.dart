@@ -16,7 +16,11 @@ class SingleDataCard extends StatelessWidget {
           name,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
-        Text(data.toString(), style: Theme.of(context).textTheme.bodyMedium),
+        Text(
+          data.toString(),
+          style: Theme.of(context).textTheme.bodyMedium,
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }

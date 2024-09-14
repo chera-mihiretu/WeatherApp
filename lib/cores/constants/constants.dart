@@ -46,4 +46,7 @@ class AppData {
       return result;
     }
   }
+
+  //! UI errors
+  static const String inputError = 'City name is required';
 }

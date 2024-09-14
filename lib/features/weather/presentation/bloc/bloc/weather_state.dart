@@ -15,6 +15,12 @@ final class WeatherLoadedState extends WeatherState {
   const WeatherLoadedState({required this.fullWeatherEntity});
 }
 
+final class WeatherSearchLoadedState extends WeatherState {
+  final FullWeatherEntity fullWeatherEntity;
+
+  const WeatherSearchLoadedState({required this.fullWeatherEntity});
+}
+
 final class WeatherErrorState extends WeatherState {
   final String message;
 
